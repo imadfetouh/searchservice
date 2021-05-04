@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searchservice-deployment
+  labels:
+    app: searchservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: searchservice
+  template:
+    metadata:
+      labels:
+        app: searchservice
+    spec:
+      containers:
+        - name: searchservice
+          imagePullPolicy: Always
+          image: imadelfetouh99/searchservice:latest
+          ports:
+            - containerPort: 8088
+          env:
+            - name: SEARCHSERVICE_MYSQL_MASTER_HOST
+              value: mysql-searchservice-master-service
+            - name: SEARCHSERVICE_MYSQL_REPLICA_HOST
+              value: mysql-searchservice-master-service
+            - name: SEARCHSERVICE_MYSQL_MASTER_PORT
+              value: '3327'
+            - name: SEARCHSERVICE_MYSQL_REPLICA_PORT
+              value: '3327'
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: password
+            - name: RABBIT_HOST
+              value: rabbit-service
+            - name: secretkey
+              value: secretkeyforkwetterimadinjwt@semester6
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: searchservice-service
+spec:
+  selector:
+    app: searchservice
+  ports:
+    - port: 8088
+      targetPort: 8088
