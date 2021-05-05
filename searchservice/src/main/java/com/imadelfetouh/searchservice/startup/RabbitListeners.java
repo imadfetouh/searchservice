@@ -1,6 +1,5 @@
 package com.imadelfetouh.searchservice.startup;
 
-import com.imadelfetouh.searchservice.rabbit.thread.AddTweetThread;
 import com.imadelfetouh.searchservice.rabbit.thread.AddUserThread;
 import com.imadelfetouh.searchservice.rabbit.thread.DeleteUserThread;
 import org.springframework.boot.ApplicationArguments;
@@ -18,15 +17,12 @@ public class RabbitListeners implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Executor executor = Executors.newScheduledThreadPool(3);
+        Executor executor = Executors.newScheduledThreadPool(2);
 
         AddUserThread addUserThread = new AddUserThread();
         executor.execute(addUserThread);
 
         DeleteUserThread deleteUserThread = new DeleteUserThread();
         executor.execute(deleteUserThread);
-
-        AddTweetThread addTweetThread = new AddTweetThread();
-        executor.execute(addTweetThread);
     }
 }

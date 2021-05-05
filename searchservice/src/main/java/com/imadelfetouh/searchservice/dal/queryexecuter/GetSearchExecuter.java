@@ -22,10 +22,7 @@ public class GetSearchExecuter implements QueryExecuter<List<SearchDTO>> {
     public ResponseModel<List<SearchDTO>> executeQuery(Session session) {
         ResponseModel<List<SearchDTO>> responseModel = new ResponseModel<>();
 
-        Query query = session.createSQLQuery("SELECT `user`.userId, 'user', `user`.userphoto, `user`.username FROM `user` WHERE `user`.username LIKE :search " +
-                "UNION ALL " +
-                "SELECT tweet.tweetId, 'tweet', `user`.userphoto, tweet.content FROM tweet INNER JOIN `user` ON tweet.user_id = `user`.userId WHERE tweet.content LIKE :search");
-
+        Query query = session.createSQLQuery("SELECT `user`.userId, 'user', `user`.userphoto, `user`.username FROM `user` WHERE `user`.username LIKE :search ");
         query.setParameter("search", "%"+search+"%");
 
         List<Object[]> tuples = query.getResultList();

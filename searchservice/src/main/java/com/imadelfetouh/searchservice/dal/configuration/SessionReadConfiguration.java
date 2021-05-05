@@ -1,6 +1,5 @@
 package com.imadelfetouh.searchservice.dal.configuration;
 
-import com.imadelfetouh.searchservice.dal.ormmodel.Tweet;
 import com.imadelfetouh.searchservice.dal.ormmodel.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,7 +23,6 @@ public class SessionReadConfiguration {
         configuration.getProperties().put(Environment.URL, "jdbc:mysql://"+System.getenv("SEARCHSERVICE_MYSQL_REPLICA_HOST")+":"+System.getenv("SEARCHSERVICE_MYSQL_REPLICA_PORT")+"/searchservice");
 
         configuration.addAnnotatedClass(User.class);
-        configuration.addAnnotatedClass(Tweet.class);
 
         sessionFactory = configuration.configure().buildSessionFactory();
     }
