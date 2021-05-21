@@ -20,7 +20,6 @@ public class Executer<T> extends SessionHelper{
             responseModel = queryExecuter.executeQuery(getSession());
         }
         catch (Exception e) {
-            e.printStackTrace();
             logger.severe(e.getMessage());
             rollback();
             responseModel.setResponseType(ResponseType.ERROR);

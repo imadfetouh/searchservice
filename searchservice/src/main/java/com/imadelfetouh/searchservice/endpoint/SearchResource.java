@@ -28,7 +28,7 @@ public class SearchResource {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SearchDTO>> getFollowingUsers(@RequestParam("search") String search) {
 
-        logger.info("search request made searching for: " + search);
+        logger.info("search request made");
 
         ResponseModel<List<SearchDTO>> responseModel = searchDal.search(search);
 
